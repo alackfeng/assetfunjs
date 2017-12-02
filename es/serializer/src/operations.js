@@ -656,8 +656,8 @@ export var fba_distribute = new Serializer("fba_distribute", {
     amount: int64
 });
 export var price_unit = new Serializer("price_unit", {
-    base: string,
-    quote: string
+    platform_id: string,
+    quote_base: string
 });
 export var option_value = new Serializer("option_value", {
     alpha: string,
@@ -690,6 +690,7 @@ export var subject_publish = new Serializer("subject_publish", {
     fee: asset,
     creator: protocol_id_type("account"),
     subject_name: string,
+    article_url: string,
     content: optional(subject_content),
     opts: optional(subject_options),
     exts: optional(extend_options),
