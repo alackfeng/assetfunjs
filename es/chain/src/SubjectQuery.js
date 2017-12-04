@@ -153,20 +153,6 @@ function GetSubjectEventsByOperator(startId, limit, operatorId) {
     });
 }
 
-function FrontPageGetSubjects(condition) {
-    return new Promise(function (resolve, reject) {
-        Apis.instance().db_api().exec("front_page_get_subjects", [condition]).then(function (subjects) {
-            if (subjects.length >= 0) {
-                console.log(subjects);
-                console.log(subjects.length);
-                resolve(subjects);
-            } else {
-                reject(new Error("there is no subjects."));
-            }
-        });
-    });
-}
-
 function MarketGetSubjects(condition) {
     return new Promise(function (resolve, reject) {
         Apis.instance().db_api().exec("market_get_subjects", [condition]).then(function (subjects) {
@@ -195,4 +181,18 @@ function MyGetSubjects(condition) {
     });
 }
 
-export { GetSubjectById, GetSubjectsByName, GetSubjectsOrderById, GetSubjectsByStatus, GetSubjectsByCreator, GetSubjectsByCreateTime, GetSubjectsByVoteEndTime, GetSubjectVotesByVoter, GetSubjectVotesBySubjectId, GetSubjectEventsBySubjectId, GetSubjectEventsByOperator, FrontPageGetSubjects, MarketGetSubjects, MyGetSubjects };
+function GetMyCreateSubjects(condition) {
+    return new Promise(function (resolve, reject) {
+        Apis.instance().db_api().exec("get_my_create_subjects", [condition]).then(function (subjects) {
+            if (subjects.length >= 0) {
+                console.log(subjects);
+                console.log(subjects.length);
+                resolve(subjects);
+            } else {
+                reject(new Error("there is no subjects."));
+            }
+        });
+    });
+}
+
+export { GetSubjectById, GetSubjectsByName, GetSubjectsOrderById, GetSubjectsByStatus, GetSubjectsByCreator, GetSubjectsByCreateTime, GetSubjectsByVoteEndTime, GetSubjectVotesByVoter, GetSubjectVotesBySubjectId, GetSubjectEventsBySubjectId, GetSubjectEventsByOperator, MarketGetSubjects, MyGetSubjects, GetMyCreateSubjects };
