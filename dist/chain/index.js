@@ -1,7 +1,7 @@
 "use strict";
 
 exports.__esModule = true;
-exports.GetFeedPrice = exports.GetMyCreateSubjects = exports.MyGetSubjects = exports.MarketGetSubjects = exports.FrontPageGetSubjects = exports.GetSubjectEventsByOperator = exports.GetSubjectEventsBySubjectId = exports.GetSubjectVotesBySubjectId = exports.GetSubjectVotesByVoter = exports.GetSubjectsByVoteEndTime = exports.GetSubjectsByCreateTime = exports.GetSubjectsByCreator = exports.GetSubjectsByStatus = exports.GetSubjectsOrderById = exports.GetSubjectsByName = exports.GetSubjectById = exports.Login = exports.FetchChain = exports.ChainValidation = exports.TransactionHelper = exports.NumberUtils = exports.ObjectId = exports.ChainTypes = exports.FetchChainObjects = exports.TransactionBuilder = exports.ChainStore = undefined;
+exports.GetLatestValidPriceBatch = exports.GetLatestValidPrice = exports.GetFeedPrice = exports.GetMyCreateSubjects = exports.MyGetSubjects = exports.MarketGetSubjects = exports.FrontPageGetSubjects = exports.GetSubjectEventsByOperator = exports.GetSubjectEventsBySubjectId = exports.GetSubjectVotesBySubjectId = exports.GetSubjectVotesByVoter = exports.GetSubjectsByVoteEndTime = exports.GetSubjectsByCreateTime = exports.GetSubjectsByCreator = exports.GetSubjectsByStatus = exports.GetSubjectsOrderById = exports.GetSubjectsByName = exports.GetSubjectById = exports.Login = exports.FetchChain = exports.ChainValidation = exports.TransactionHelper = exports.NumberUtils = exports.ObjectId = exports.ChainTypes = exports.FetchChainObjects = exports.TransactionBuilder = exports.ChainStore = undefined;
 
 var _ChainStore = require("./src/ChainStore");
 
@@ -76,3 +76,5 @@ exports.MarketGetSubjects = _SubjectQuery.MarketGetSubjects;
 exports.MyGetSubjects = _SubjectQuery.MyGetSubjects;
 exports.GetMyCreateSubjects = _SubjectQuery.GetMyCreateSubjects;
 exports.GetFeedPrice = _FeedPrice.GetFeedPrice;
+exports.GetLatestValidPrice = _FeedPrice.GetLatestValidPrice;
+exports.GetLatestValidPriceBatch = _FeedPrice.GetLatestValidPriceBatch;
