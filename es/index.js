@@ -41,4 +41,4 @@ var FetchChainObjects = ChainStore.FetchChainObjects,
     FetchChain = ChainStore.FetchChain;
 
 
-export { ChainStore, TransactionBuilder, FetchChainObjects, ChainTypes, EmitterInstance, ObjectId, NumberUtils, TransactionHelper, ChainValidation, FetchChain, Login, GetSubjectById, GetSubjectsByName, GetSubjectsOrderById, GetSubjectsByStatus, GetSubjectsByCreator, GetSubjectsByCreateTime, GetSubjectsByVoteEndTime, GetSubjectVotesByVoter, GetSubjectVotesBySubjectId, FrontPageGetSubjects, MarketGetSubjects, MyGetSubjects, GetMyCreateSubjects, GetFeedPrice };
+export { ChainStore, TransactionBuilder, FetchChainObjects, ChainTypes, EmitterInstance, ObjectId, NumberUtils, TransactionHelper, ChainValidation, FetchChain, Login, GetSubjectById, GetSubjectsByName, GetSubjectsOrderById, GetSubjectsByStatus, GetSubjectsByCreator, GetSubjectsByCreateTime, GetSubjectsByVoteEndTime, GetSubjectVotesByVoter, GetSubjectVotesBySubjectId, FrontPageGetSubjects, MarketGetSubjects, MyGetSubjects, GetMyCreateSubjects, GetFeedPrice, GetLatestValidPrice, GetLatestValidPriceBatch };
