@@ -5,19 +5,6 @@ exports.GetMyCreateSubjects = exports.MyGetSubjects = exports.MarketGetSubjects 
 
 var _assetfunjsWs = require("assetfunjs-ws");
 
-function GetSubjectById(Id) {
-    return new Promise(function (resolve, reject) {
-        _assetfunjsWs.Apis.instance().db_api().exec("get_subject_by_id", [Id]).then(function (subjects) {
-            if (subjects) {
-                console.log(subjects);
-                resolve(subjects);
-            } else {
-                reject(new Error("there is no subject whose id is " + Id));
-            }
-        });
-    });
-}
-
 function GetSubjectsByName(startId, limit, name) {
     return new Promise(function (resolve, reject) {
         _assetfunjsWs.Apis.instance().db_api().exec("get_subjects_by_name", [startId, limit, name]).then(function (subjects) {
@@ -54,20 +41,6 @@ function GetSubjectsByStatus(startId, limit, status) {
                 resolve(subjects);
             } else {
                 reject(new Error("there is no subject whose status is create_status."));
-            }
-        });
-    });
-}
-
-function GetSubjectsByCreator(startId, limit, creatorNameOrId) {
-    return new Promise(function (resolve, reject) {
-        _assetfunjsWs.Apis.instance().db_api().exec("get_subjects_by_creator", [startId, limit, creatorNameOrId]).then(function (subjects) {
-            if (subjects.length > 0) {
-                console.log(subjects);
-                console.log(subjects.length);
-                resolve(subjects);
-            } else {
-                reject(new Error("there is no subject created by " + creatorNameOrId));
             }
         });
     });
@@ -209,6 +182,33 @@ function GetMyCreateSubjects(condition) {
                 resolve(subjects);
             } else {
                 reject(new Error("there is no subjects."));
+            }
+        });
+    });
+}
+
+function GetSubjectById(accountNameOrId, subjectId) {
+    return new Promise(function (resolve, reject) {
+        _assetfunjsWs.Apis.instance().db_api().exec("get_subject_by_id", [accountNameOrId, subjectId]).then(function (subjects) {
+            if (subjects) {
+                console.log(subjects);
+                resolve(subjects);
+            } else {
+                reject(new Error("there is no subject."));
+            }
+        });
+    });
+}
+
+function GetSubjectsByCreator(condition, creatorNameOrId) {
+    return new Promise(function (resolve, reject) {
+        _assetfunjsWs.Apis.instance().db_api().exec("get_subjects_by_creator", [condition, creatorNameOrId]).then(function (subjects) {
+            if (subjects.length >= 0) {
+                console.log(subjects);
+                console.log(subjects.length);
+                resolve(subjects);
+            } else {
+                reject(new Error("there is no subject."));
             }
         });
     });

@@ -18,19 +18,6 @@ describe("SubjectQuery functions test", () => {
             });
         });
 
-	it("Get subjects by id", function(){
-        return new Promise(function(resolve, reject){
-            GetSubjectById("1.16.0").then(function(subject){
-           		console.log(subject);
-                if (subject) {
-           		    resolve()
-                }else{
-           			reject(Error("there is no subject whose id is 1.16.1."))
-           		}	
-           })
-        })
-    })
-
 	it("Get subjects by name", function(){
         return new Promise(function(resolve, reject){
             GetSubjectsByName(1,10,"bitcoin_up_20006").then(function(subjects){
@@ -61,19 +48,6 @@ describe("SubjectQuery functions test", () => {
     it("Get subjects by status", function(){
         return new Promise(function(resolve, reject){
             GetSubjectsByStatus(1,10,"create_status").then(function(subjects){
-           		console.log(subjects);
-                if (subjects) {
-           		    resolve()
-                }else{
-           			reject(Error("there is no subject named bitcoin_up_20006."))
-           		}	
-           })
-        })
-    })
-
-    it("Get subjects by creator", function(){
-        return new Promise(function(resolve, reject){
-            GetSubjectsByCreator(1,10,"1.2.19").then(function(subjects){
            		console.log(subjects);
                 if (subjects) {
            		    resolve()
@@ -148,6 +122,34 @@ describe("SubjectQuery functions test", () => {
            })
         })
     })
+
+    it("Get subject by id", function(){
+        return new Promise(function(resolve, reject){
+            GetSubjectById("nathan", "1.16.0").then(function(subjects){
+              console.log(subjects);
+                if (subjects) {
+                  resolve()
+                }else{
+                reject(Error("there is no subjects."))
+              } 
+           })
+        })
+    })
+
+    it("Get subjects by creator", function(){
+        return new Promise(function(resolve, reject){
+            GetSubjectsByCreator({"start":1,"limit":100,"start_time":"2017-11-02T12:00","end_time":"2018-12-10T12:00","direction":1,"order_by":"create_time","platform_quote_base":{"quote_base":"ALL","platform_id": "0000000"},"status":"all","account_name_or_id":"nathan"}, "nathan").then(function(subjects){
+              console.log(subjects);
+                if (subjects) {
+                  resolve()
+                }else{
+                reject(Error("there is no subjects."))
+              } 
+           })
+        })
+    })
+
+    
 
     
 })
