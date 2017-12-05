@@ -1,7 +1,7 @@
 "use strict";
 
 exports.__esModule = true;
-exports.MyGetSubjects = exports.MarketGetSubjects = exports.FrontPageGetSubjects = exports.GetSubjectEventsByOperator = exports.GetSubjectEventsBySubjectId = exports.GetSubjectVotesBySubjectId = exports.GetSubjectVotesByVoter = exports.GetSubjectsByVoteEndTime = exports.GetSubjectsByCreateTime = exports.GetSubjectsByCreator = exports.GetSubjectsByStatus = exports.GetSubjectsOrderById = exports.GetSubjectsByName = exports.GetSubjectById = undefined;
+exports.GetMyCreateSubjects = exports.MyGetSubjects = exports.MarketGetSubjects = exports.FrontPageGetSubjects = exports.GetSubjectEventsByOperator = exports.GetSubjectEventsBySubjectId = exports.GetSubjectVotesBySubjectId = exports.GetSubjectVotesByVoter = exports.GetSubjectsByVoteEndTime = exports.GetSubjectsByCreateTime = exports.GetSubjectsByCreator = exports.GetSubjectsByStatus = exports.GetSubjectsOrderById = exports.GetSubjectsByName = exports.GetSubjectById = undefined;
 
 var _assetfunjsWs = require("assetfunjs-ws");
 
@@ -200,6 +200,20 @@ function MyGetSubjects(condition) {
     });
 }
 
+function GetMyCreateSubjects(condition) {
+    return new Promise(function (resolve, reject) {
+        _assetfunjsWs.Apis.instance().db_api().exec("get_my_create_subjects", [condition]).then(function (subjects) {
+            if (subjects.length >= 0) {
+                console.log(subjects);
+                console.log(subjects.length);
+                resolve(subjects);
+            } else {
+                reject(new Error("there is no subjects."));
+            }
+        });
+    });
+}
+
 exports.GetSubjectById = GetSubjectById;
 exports.GetSubjectsByName = GetSubjectsByName;
 exports.GetSubjectsOrderById = GetSubjectsOrderById;
@@ -214,3 +228,4 @@ exports.GetSubjectEventsByOperator = GetSubjectEventsByOperator;
 exports.FrontPageGetSubjects = FrontPageGetSubjects;
 exports.MarketGetSubjects = MarketGetSubjects;
 exports.MyGetSubjects = MyGetSubjects;
+exports.GetMyCreateSubjects = GetMyCreateSubjects;

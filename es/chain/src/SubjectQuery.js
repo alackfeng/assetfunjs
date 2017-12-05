@@ -195,4 +195,18 @@ function MyGetSubjects(condition) {
     });
 }
 
-export { GetSubjectById, GetSubjectsByName, GetSubjectsOrderById, GetSubjectsByStatus, GetSubjectsByCreator, GetSubjectsByCreateTime, GetSubjectsByVoteEndTime, GetSubjectVotesByVoter, GetSubjectVotesBySubjectId, GetSubjectEventsBySubjectId, GetSubjectEventsByOperator, FrontPageGetSubjects, MarketGetSubjects, MyGetSubjects };
+function GetMyCreateSubjects(condition) {
+    return new Promise(function (resolve, reject) {
+        Apis.instance().db_api().exec("get_my_create_subjects", [condition]).then(function (subjects) {
+            if (subjects.length >= 0) {
+                console.log(subjects);
+                console.log(subjects.length);
+                resolve(subjects);
+            } else {
+                reject(new Error("there is no subjects."));
+            }
+        });
+    });
+}
+
+export { GetSubjectById, GetSubjectsByName, GetSubjectsOrderById, GetSubjectsByStatus, GetSubjectsByCreator, GetSubjectsByCreateTime, GetSubjectsByVoteEndTime, GetSubjectVotesByVoter, GetSubjectVotesBySubjectId, GetSubjectEventsBySubjectId, GetSubjectEventsByOperator, FrontPageGetSubjects, MarketGetSubjects, MyGetSubjects, GetMyCreateSubjects };
