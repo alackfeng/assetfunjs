@@ -33,7 +33,8 @@ import Login from "./chain/src/AccountLogin";
 
 //[lilianwen add 2017-10-21]
 import { GetSubjectById, GetSubjectsByName, GetSubjectsOrderById, GetSubjectsByStatus, GetSubjectsByCreator, GetSubjectsByCreateTime, GetSubjectsByVoteEndTime, GetSubjectVotesByVoter, GetSubjectVotesBySubjectId, GetSubjectEventsBySubjectId, GetSubjectEventsByOperator, FrontPageGetSubjects, MarketGetSubjects, MyGetSubjects, GetMyCreateSubjects } from "./chain/src/SubjectQuery";
-import { GetFeedPrice } from "./chain/src/FeedPrice";
+import { GetFeedPrice, GetLatestValidPrice, GetLatestValidPriceBatch } from "./chain/src/FeedPrice";
+
 //[end]
 
 var FetchChainObjects = ChainStore.FetchChainObjects,

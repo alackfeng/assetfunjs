@@ -1,6 +1,7 @@
 "use strict";
 
 exports.__esModule = true;
+exports.GetLatestValidPriceBatch = exports.GetLatestValidPrice = exports.GetFeedPrice = undefined;
 
 var _assetfunjsWs = require("assetfunjs-ws");
 
@@ -27,6 +28,32 @@ function GetFeedPrice(coin_name, base, time) {
     });
 }
 
+function GetLatestValidPrice(platform, quote_base) {
+    return new Promise(function (resolve, reject) {
+        _assetfunjsWs.Apis.instance().db_api().exec("get_latest_valid_price", [platform, quote_base]).then(function (price) {
+            if (price) {
+                console.log(price);
+                resolve(price);
+            } else {
+                reject(new Error("there is no price" + platform + "," + quote_base));
+            }
+        });
+    });
+}
+
+function GetLatestValidPriceBatch(query_items) {
+    return new Promise(function (resolve, reject) {
+        _assetfunjsWs.Apis.instance().db_api().exec("get_latest_valid_price_batch", [query_items]).then(function (price_items) {
+            if (price_items) {
+                console.log("price_items: ", price_items);
+                resolve(price_items);
+            } else {
+                reject(new Error("there is no price: " + query_items));
+            }
+        });
+    });
+}
+
 /* for future
 function GetFeedPrice(quote, base, src, time){
     return new Promise(function(resolve, reject){
@@ -42,5 +69,6 @@ function GetFeedPrice(quote, base, src, time){
 }
 */
 
-exports.default = GetFeedPrice;
-module.exports = exports["default"];
+exports.GetFeedPrice = GetFeedPrice;
+exports.GetLatestValidPrice = GetLatestValidPrice;
+exports.GetLatestValidPriceBatch = GetLatestValidPriceBatch;

@@ -11,7 +11,7 @@ import Login from "./src/AccountLogin";
 //[lilianwen add 2017-10-21]
 import { GetSubjectById, GetSubjectsByName, GetSubjectsOrderById, GetSubjectsByStatus, GetSubjectsByCreator, GetSubjectsByCreateTime, GetSubjectsByVoteEndTime, GetSubjectVotesByVoter, GetSubjectVotesBySubjectId, GetSubjectEventsBySubjectId, GetSubjectEventsByOperator, FrontPageGetSubjects, MarketGetSubjects, MyGetSubjects, GetMyCreateSubjects } from "./src/SubjectQuery";
 
-import { GetFeedPrice } from "./src/FeedPrice";
+import { GetFeedPrice, GetLatestValidPrice, GetLatestValidPriceBatch } from "./src/FeedPrice";
 //[end]
 
 var FetchChainObjects = ChainStore.FetchChainObjects,
