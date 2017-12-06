@@ -190,8 +190,9 @@ function GetMyCreateSubjects(condition) {
 function GetSubjectById(accountNameOrId, subjectId) {
     return new Promise(function (resolve, reject) {
         _assetfunjsWs.Apis.instance().db_api().exec("get_subject_by_id", [accountNameOrId, subjectId]).then(function (subjects) {
-            if (subjects) {
+            if (subjects.length >= 0) {
                 console.log(subjects);
+                console.log(subjects.length);
                 resolve(subjects);
             } else {
                 reject(new Error("there is no subject."));
