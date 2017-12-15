@@ -129,7 +129,7 @@ var ChainStore = function () {
                     var optional_object = optional_objects[i];
                     if (optional_object) {
 
-                        _this._updateObject(optional_object, true);
+                        // block time not sync , this._updateObject( optional_object, true );
 
                         var head_time = new Date(optional_object.time + "+00:00").getTime();
                         _this.head_block_time_string = optional_object.time;
