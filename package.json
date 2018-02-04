@@ -61,7 +61,7 @@
     "ecurve": "^1.0.2",
     "event-emitter": "^0.3.4",
     "immutable": "^3.7.6",
-    "secure-random": "^1.1.1"
+    "secure-random": "git+https://github.com/alackfeng/secure-random.git"
   },
   "devDependencies": {
     "assert": "^1.3.0",
