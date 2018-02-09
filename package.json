@@ -54,7 +54,7 @@
     "bigi": "^1.4.1",
     "bs58": "^3.0.0",
     "bytebuffer": "^5.0.0",
-    "create-hash": "^1.1.2",
+    "create-hash": "git+https://github.com/alackfeng/create-hash.git",
     "create-hmac": "^1.1.4",
     "crypto-js": "^3.1.9-1",
     "deep-equal": "^1.0.1",
