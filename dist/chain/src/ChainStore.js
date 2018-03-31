@@ -68,6 +68,9 @@ var account_prefix = "1." + account_object_type + ".";
 
 var DEBUG = JSON.parse(process.env.npm_config__graphene_chain_chain_debug || false);
 
+var safe_api = function safe_api() {
+    return _assetfunjsWs.Apis.instance() && _assetfunjsWs.Apis.instance().db_api();
+};
 /**
 *  @brief maintains a local cache of blockchain state
 *
@@ -163,7 +166,7 @@ var ChainStore = function () {
                         _this.progress = progress_delta / (now - start);
 
                         if (delta < 60) {
-                            _assetfunjsWs.Apis.instance().db_api().exec("set_subscribe_callback", [_this.onUpdate.bind(_this), true]).then(function () {
+                            safe_api() && _assetfunjsWs.Apis.instance().db_api().exec("set_subscribe_callback", [_this.onUpdate.bind(_this), true]).then(function () {
                                 console.log("synced and subscribed, chainstore ready");
                                 _this.subscribed = true;
                                 _this.subError = null;
@@ -391,7 +394,7 @@ var ChainStore = function () {
 
         if (asset_id === true) return undefined;
 
-        _assetfunjsWs.Apis.instance().db_api().exec("lookup_asset_symbols", [[id_or_symbol]]).then(function (asset_objects) {
+        safe_api() && _assetfunjsWs.Apis.instance().db_api().exec("lookup_asset_symbols", [[id_or_symbol]]).then(function (asset_objects) {
             // console.log( "lookup symbol ", id_or_symbol )
             if (asset_objects.length && asset_objects[0]) _this3._updateObject(asset_objects[0], true);else {
                 _this3.assets_by_symbol.set(id_or_symbol, null);
@@ -423,7 +426,7 @@ var ChainStore = function () {
 
         if (this.get_account_refs_of_keys_calls.has(key)) return this.account_ids_by_key.get(key);else {
             this.get_account_refs_of_keys_calls.add(key);
-            _assetfunjsWs.Apis.instance().db_api().exec("get_key_references", [[key]]).then(function (vec_account_id) {
+            safe_api() && _assetfunjsWs.Apis.instance().db_api().exec("get_key_references", [[key]]).then(function (vec_account_id) {
                 var refs = _immutable2.default.Set();
                 vec_account_id = vec_account_id[0];
                 refs = refs.withMutations(function (r) {
@@ -461,7 +464,7 @@ var ChainStore = function () {
             * having to update them / merge them or index them in updateObject.
             */
             this.balance_objects_by_address.set(address, _immutable2.default.Set());
-            _assetfunjsWs.Apis.instance().db_api().exec("get_balance_objects", [[address]]).then(function (balance_objects) {
+            safe_api() && _assetfunjsWs.Apis.instance().db_api().exec("get_balance_objects", [[address]]).then(function (balance_objects) {
                 var set = new Set();
                 for (var i = 0; i < balance_objects.length; ++i) {
                     _this5._updateObject(balance_objects[i]);
@@ -513,7 +516,7 @@ var ChainStore = function () {
             // the fetch
             if (DEBUG) console.log("fetching object: ", id);
             this.objects_by_id.set(id, true);
-            _assetfunjsWs.Apis.instance().db_api().exec("get_objects", [[id]]).then(function (optional_objects) {
+            safe_api() && _assetfunjsWs.Apis.instance().db_api().exec("get_objects", [[id]]).then(function (optional_objects) {
                 //if(DEBUG) console.log("... optional_objects",optional_objects ? optional_objects[0].id : null)
                 for (var _i = 0; _i < optional_objects.length; _i++) {
                     var optional_object = optional_objects[_i];
@@ -719,7 +722,7 @@ var ChainStore = function () {
         var _this7 = this;
 
         return new Promise(function (resolve, reject) {
-            _assetfunjsWs.Apis.instance().db_api().exec("get_witness_by_account", [account_id]).then(function (optional_witness_object) {
+            safe_api() && _assetfunjsWs.Apis.instance().db_api().exec("get_witness_by_account", [account_id]).then(function (optional_witness_object) {
                 if (optional_witness_object) {
                     _this7._subTo("witnesses", optional_witness_object.id);
                     _this7.witness_by_account_id = _this7.witness_by_account_id.set(optional_witness_object.witness_account, optional_witness_object.id);
@@ -743,7 +746,7 @@ var ChainStore = function () {
         var _this8 = this;
 
         return new Promise(function (resolve, reject) {
-            _assetfunjsWs.Apis.instance().db_api().exec("get_committee_member_by_account", [account_id]).then(function (optional_committee_object) {
+            safe_api() && _assetfunjsWs.Apis.instance().db_api().exec("get_committee_member_by_account", [account_id]).then(function (optional_committee_object) {
                 if (optional_committee_object) {
                     _this8._subTo("committee", optional_committee_object.id);
                     _this8.committee_by_account_id = _this8.committee_by_account_id.set(optional_committee_object.committee_member_account, optional_committee_object.id);
@@ -790,7 +793,7 @@ var ChainStore = function () {
         if (!this.fetching_get_full_accounts.has(name_or_id) || Date.now() - this.fetching_get_full_accounts.get(name_or_id) > 5000) {
             this.fetching_get_full_accounts.set(name_or_id, Date.now());
             //console.log( "FETCHING FULL ACCOUNT: ", name_or_id )
-            _assetfunjsWs.Apis.instance().db_api().exec("get_full_accounts", [[name_or_id], true]).then(function (results) {
+            safe_api() && _assetfunjsWs.Apis.instance().db_api().exec("get_full_accounts", [[name_or_id], true]).then(function (results) {
                 if (results.length === 0) {
                     if (_ChainValidation2.default.is_object_id(name_or_id)) {
                         _this9.objects_by_id.set(name_or_id, null);
@@ -867,7 +870,7 @@ var ChainStore = function () {
                     });
                 });
 
-                if (sub_to_objects.length) _assetfunjsWs.Apis.instance().db_api().exec("get_objects", [sub_to_objects]);
+                if (sub_to_objects.length) safe_api() && _assetfunjsWs.Apis.instance().db_api().exec("get_objects", [sub_to_objects]);
 
                 _this9._updateObject(statistics);
                 var updated_account = _this9._updateObject(account);
@@ -1260,7 +1263,7 @@ var ChainStore = function () {
                 if (!call_orders.has(object.id)) {
                     account = account.set("call_orders", call_orders.add(object.id));
                     this.objects_by_id.set(account.get("id"), account);
-                    _assetfunjsWs.Apis.instance().db_api().exec("get_objects", [[object.id]]); // Force subscription to the object in the witness node by calling get_objects
+                    safe_api() && _assetfunjsWs.Apis.instance().db_api().exec("get_objects", [[object.id]]); // Force subscription to the object in the witness node by calling get_objects
                 }
             }
         } else if (object.id.substring(0, order_prefix.length) == order_prefix) {
@@ -1272,7 +1275,7 @@ var ChainStore = function () {
                 if (!limit_orders.has(object.id)) {
                     _account2 = _account2.set("orders", limit_orders.add(object.id));
                     this.objects_by_id.set(_account2.get("id"), _account2);
-                    _assetfunjsWs.Apis.instance().db_api().exec("get_objects", [[object.id]]); // Force subscription to the object in the witness node by calling get_objects
+                    safe_api() && _assetfunjsWs.Apis.instance().db_api().exec("get_objects", [[object.id]]); // Force subscription to the object in the witness node by calling get_objects
                 }
             }
             // POROPOSAL OBJECT
@@ -1302,7 +1305,7 @@ var ChainStore = function () {
 
         if (missing.length) {
             // we may need to fetch some objects
-            _assetfunjsWs.Apis.instance().db_api().exec("lookup_vote_ids", [missing]).then(function (vote_obj_array) {
+            safe_api() && _assetfunjsWs.Apis.instance().db_api().exec("lookup_vote_ids", [missing]).then(function (vote_obj_array) {
                 console.log("missing ===========> ", missing);
                 console.log("vote objects ===========> ", vote_obj_array);
                 for (var _i2 = 0; _i2 < vote_obj_array.length; ++_i2) {
@@ -1368,9 +1371,9 @@ var ChainStore = function () {
 
 
     ChainStore.prototype.queryForSubjectPublish = function queryForSubjectPublish(pretictionEndTime) {
-        _assetfunjsWs.Apis.instance().db_api().exec("get_global_properties").then(function (chainGlobalProperties) {
+        safe_api() && _assetfunjsWs.Apis.instance().db_api().exec("get_global_properties").then(function (chainGlobalProperties) {
             var vote_duration_percent = chainGlobalProperties.parameter.subject_profile.vote_duration_percent;
-            _assetfunjsWs.Apis.instance().db_api().exec("get_dynamic_global_properties").then(function (chainDynamicProperties) {
+            safe_api() && _assetfunjsWs.Apis.instance().db_api().exec("get_dynamic_global_properties").then(function (chainDynamicProperties) {
                 var result = {};
                 var current = timeStringToDate(chainDynamicProperties.time);
                 var deltTime = (timeStringToDate(pretictionEndTime).getTime() - current.getTime()) / 1000; //unit second
